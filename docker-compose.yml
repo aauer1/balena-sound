@@ -2,6 +2,8 @@ version: '2'
 
 volumes:
   spotifycache:
+  music:
+  mpd:
 
 services:
 
@@ -76,3 +78,11 @@ services:
     network_mode: host
     volumes:
       - spotifycache:/var/cache/raspotify
+  mpd:
+    build: ./plugins/mpd
+    restart: on-failure
+    privileged: true
+    network_mode: host
+    volumes:
+      - music:/music
+      - mpd:/mpd

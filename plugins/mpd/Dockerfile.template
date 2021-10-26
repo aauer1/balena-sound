@@ -1,0 +1,17 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:bullseye
+
+ENV PULSE_SERVER=tcp:localhost:4317
+
+RUN apt-get update -y
+RUN apt-get install -y mpd
+
+COPY mpd.conf /etc/mpd.conf
+COPY start.sh /home/mpd/start.sh
+
+RUN mkdir /mpd
+RUN chown mpd /mpd
+RUN chmod +x /home/mpd/start.sh
+
+EXPOSE 6600
+
+CMD /home/mpd/start.sh
