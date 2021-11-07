@@ -2,7 +2,6 @@ version: '2'
 
 volumes:
   spotifycache:
-  music:
   mpd:
 
 services:
@@ -84,5 +83,4 @@ services:
     privileged: true
     network_mode: host
     volumes:
-      - music:/music
       - mpd:/mpd

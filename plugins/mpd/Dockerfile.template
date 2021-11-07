@@ -1,12 +1,18 @@
 FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:bullseye
 
 ENV PULSE_SERVER=tcp:localhost:4317
+ENV UDEV=on
 
 RUN apt-get update -y
-RUN apt-get install -y mpd
+RUN apt-get install -y mpd util-linux grep
 
 COPY mpd.conf /etc/mpd.conf
 COPY start.sh /home/mpd/start.sh
+
+COPY udev/usb.rules /etc/udev/rules.d/usb.rules
+COPY scripts/* /usr/local/bin/
+
+WORKDIR /home/mpd
 
 RUN mkdir /mpd
 RUN chown mpd /mpd
